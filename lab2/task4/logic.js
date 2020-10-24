@@ -1,6 +1,17 @@
 const fs = require('fs');
 
-const INFO_FILE_PATH = '/Users/gadoevalex/Desktop/study/nodejs/task4/jsonstring.txt';
+const INFO_FILE_PATH = '/Users/gadoevalex/Desktop/evm/lab2/task4/jsonstring.txt';
+
+const readFilePromise = (filePath) => {
+		  return new Promise((resolve, reject) => {
+					 fs.readFile(filePath, "utf-8", (err, data) => {
+						  if (err) reject(err);
+
+						  resolve(data);
+					 });
+		  });
+}
+
 
 function simpleNumbers(a, b, c) {
     if (isNaN(a) || isNaN(b) || isNaN(c))
@@ -16,24 +27,21 @@ function simpleNumbers(a, b, c) {
     return result;
 }
 
-function readFromFileByIndex(index) {
+async function readFromFileByIndex(index) {
     if (isNaN(index))
         throw new Error("index is NaN");
+	 
+	 let allData = await readFilePromise(INFO_FILE_PATH)
+	 
+	 return JSON.parse(allData).info[index];
 
-    fs.readFile(INFO_FILE_PATH, (err, data) => {
-        if (err)
-            throw new Error(err);
-
-        let result = JSON.parse(data).info[index];
-        res.status(200).json(result);
-    })
 }
 
 function generateHTML(fields, url) {
     if (!url || !fields)
         throw new Error();
 
-    let html =
+    let firstHtml=
         `
     <!DOCTYPE html>
     <html lang="en">
@@ -43,22 +51,20 @@ function generateHTML(fields, url) {
         <title>Form</title>
     </head>
     <body>
-    
-        <form method="POST" action=${url}>
-            ${
-                fields.map(field => {
-                    if (field.value && field.name) {
-                        return `<input name="${field.name}" value="${field.value}" />`
-                    }
-                })
-            }
+        <form method="POST" action="${url}">\n
+		  `
+
+		  for(let field of fields) {
+			  firstHtml += `\t<input id="${field}" placeholder="${field}"/>\n`
+		  }
+
+	 let secondHtml = `
         </form>
-        
     </body>
     </html>
     `
 
-    return html;
+    return firstHtml += secondHtml;
 }
 
 module.exports = {

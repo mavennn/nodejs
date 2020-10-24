@@ -1,0 +1,1 @@
+{"alex":{"age":21,"university":"bmstu"},"alina":{"age":18,"university":"B&D","look":{"hat":{"color":"gray","size":"medium"},"hasTie":false}}}

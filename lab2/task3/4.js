@@ -3,16 +3,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const directory = "/Users/gadoevalex/Desktop/study/nodejs";
+const directory = "/Users/gadoevalex/Desktop/evm/lab2/";
 
 const MAX_LENGTH = 10;
 
 var walk = function(dir, done) {
     var results = [];
+
     fs.readdir(dir, function(err, list) {
       if (err) return done(err);
+
       var pending = list.length;
+            
       if (!pending) return done(null, results);
+
       list.forEach(function(file) {
         file = path.resolve(dir, file);
         fs.stat(file, function(err, stat) {
@@ -22,7 +26,6 @@ var walk = function(dir, done) {
               if (!--pending) done(null, results);
             });
           } else {
-
             fs.readFile(file, "utf-8", (err, text) => {
                 if (text.length <= MAX_LENGTH) {
                     console.log(text);

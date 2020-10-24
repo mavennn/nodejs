@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Find user!</title>
+        <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="input-wrapper">
+      <input id="email" type="text" placeholder="Введите email"/>
+      <button id="send-btn" class="btn" >Найти</button>
+    </div>
+
+    <div id="result">
+        <p id="email-result"></p>
+        <p id="surname-result"></p>
+        <p id="phone-result"></p>
+    </div>
+  </div>
+  
+
+
+  <script type="text/javascript">
+            const button = document.getElementById("send-btn");
+
+            const resultHandler = (res) => {
+
+                switch (res.status) {
+                    case 200:
+                        res.json()
+                        .then(res => {
+                            const email = document.getElementById("email-result");
+                            const surname = document.getElementById("surname-result");
+                            const phone = document.getElementById("phone-result");
+
+                            if (res.email) email.innerText = `Email: ${res.email}`;
+                            if (res.surname) surname.innerText = `Surname: ${res.surname}`;
+                            if (res.phone) phone.innerText = `Phone: ${res.phone}`;
+                        });
+
+                        break;
+                    case 404:
+                        alert("Не найдено");
+                    default:
+                        break
+                }
+            };
+
+            button.addEventListener("click", (event) => {
+                const email = document.getElementById("email").value;
+
+                fetch(`http://localhost:3000/api/users/${email}`, { method: "GET"})
+                    .then(res => resultHandler(res))
+                    .catch(err => {
+                            console.log(err);
+                    });
+            });
+
+        </script></body>
+</html>

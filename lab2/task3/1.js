@@ -3,12 +3,12 @@
 const readLine = require('readline');
 const fs = require('fs');
 
+const DATA_DIRECTORY = "/Users/gadoevalex/Desktop/evm/lab2/task3/data/";
+
 const rl = readLine.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-
-
 
 const readLinePromise = (text) => {
     return new Promise((resolve, reject) => {
@@ -62,12 +62,10 @@ const writeToFile = (fileName, data) => {
     // записать в файл
     if (Array.isArray(resultArray)) {
         console.log(JSON.stringify(resultArray));
-        writeToFile('result.txt', JSON.stringify(resultArray))
+        writeToFile(DATA_DIRECTORY + '1_result.txt', JSON.stringify(resultArray))
             .then(() => {
                 process.exit(1);
             })
             .catch(err => console.log(err))
     }
-
-
 })();

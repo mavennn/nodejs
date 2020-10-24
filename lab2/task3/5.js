@@ -3,6 +3,8 @@
 const readLine = require('readline');
 const fs = require('fs');
 
+const DATA_DIRECTORY = "/Users/gadoevalex/Desktop/evm/lab2/task3/data/";
+
 const rl = readLine.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -68,12 +70,12 @@ const readFilePromise = (fileName) => {
             let fileName = await readLinePromise(`Enter ${i + 1}'s file: `);
 
             // считываем содержимое файла и конкатенируем
-            result += await readFilePromise(fileName);
+            result += await readFilePromise(DATA_DIRECTORY + fileName);
         }
     }
 
     // записать в файл
-    writeToFile('five.txt', result)
+    writeToFile(DATA_DIRECTORY + '5_result.txt', result)
         .then(() => {
             process.exit(1);
         })
