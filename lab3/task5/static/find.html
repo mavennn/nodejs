@@ -26,37 +26,21 @@
   <script type="text/javascript">
             const button = document.getElementById("send-btn");
 
-            const resultHandler = (res) => {
+            function responseHandler (res) {
+                res.json()
+                .then(res => {
+                    console.log(res);
+                    document.getElementById("email-result").innerText = `Email: ${res.email}`;
+                    document.getElementById("surname-result").innerText = `Surname: ${res.surname}`;
+                    document.getElementById("phone-result").innerText = `Phone: ${res.phone}`;
+                });
+            }
 
-                switch (res.status) {
-                    case 200:
-                        res.json()
-                        .then(res => {
-                            const email = document.getElementById("email-result");
-                            const surname = document.getElementById("surname-result");
-                            const phone = document.getElementById("phone-result");
-
-                            if (res.email) email.innerText = `Email: ${res.email}`;
-                            if (res.surname) surname.innerText = `Surname: ${res.surname}`;
-                            if (res.phone) phone.innerText = `Phone: ${res.phone}`;
-                        });
-
-                        break;
-                    case 404:
-                        alert("Не найдено");
-                    default:
-                        break
-                }
-            };
-
-            button.addEventListener("click", (event) => {
+            button.addEventListener("click", () => {
                 const email = document.getElementById("email").value;
 
-                fetch(`http://localhost:3000/api/users/${email}`, { method: "GET"})
-                    .then(res => resultHandler(res))
-                    .catch(err => {
-                            console.log(err);
-                    });
+                fetch(`http://localhost:3000/api/users/${email}`, { method: "GET" })
+                    .then(res => responseHandler(res))
             });
 
         </script></body>

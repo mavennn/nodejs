@@ -39,46 +39,34 @@
                   </div>
           </div>
 
-
-
-
 		  <script type="text/javascript">
-			
-					 const sendButton = document.getElementById("send-btn");
+              var sendButton = document.getElementById("send-btn");
 
-					 sendButton.addEventListener("click", (event) => {
+              sendButton.addEventListener("click", (event) => {
 
-							const email = document.getElementById("email-input").value;
-							const surname = document.getElementById("surname-input").value;
-							const phone = document.getElementById("phone-input").value;
+                  var email = document.getElementById("email-input").value;
+                  var surname = document.getElementById("surname-input").value;
+                  var phone = document.getElementById("phone-input").value;
 
-								fetch("http://localhost:3000/sendInfo", { 
-										  method: "POST",
-										  headers: {
-													 'Content-Type': 'application/json'
-										  },
-										  body: JSON.stringify({ email, surname, phone  })
-								})
-                .then(res => responseHandler(res))
+                  fetch("http://localhost:3000/api/users/add", {
+                      method: "POST",
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ email, surname, phone  })
+                  })
+                  .then(res => res.json())
+                  .then(res => responseHandler(res));
 
-					 });
+              });
 
-
-          const responseHandler = (res) => {
-              let resultBlock = document.getElementById("result");
-              switch (res.status) {
-                  case 500:
-                      resultBlock.innerText = "Внутренняя ошибка сервера :(";
-                      break;
-                  case 409:
-                      resultBlock.innerText = "Такой пользователь уже есть";
-                      break;
-                  case 200:
-                      resultBlock.innerText = "Информация добавлена";
-                      break;
+              function responseHandler (res) {
+                  let result = document.getElementById("result");
+                  result.innerText = res.message;
+                  setInterval(() => {
+                    result.innerText = "";
+                  }, 2000);
               }
-          }
-
 
 		  </script>
 </body>
