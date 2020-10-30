@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compare three numbers</title>
+</head>
+<body>
+
+		  <div class="container">
+				 <div class="menu">
+							<div class="menu__wrapper">
+									  <div class="menu__item">
+										 <a href="/larger">Задание 1</a>
+									  </div>
+									  <div class="menu__item">
+										 <a href="/getByIndex">Задание 2</a>
+									  </div>
+									  <div class="menu__item">
+										 <a href="/generate">Задание 3</a>
+									  </div>
+									  <div class="menu__item">
+										 <a href="/numbers">Задание 4</a>
+									  </div>
+							</div>
+				 </div>
+
+				<div class="content">
+					 <input id="a" type="number" placeholder="Первое число" />
+					 <input id="b" type="number" placeholder="Второе число" />
+					 <input id="c" type="number" placeholder="Третье число" />
+					 <button id="compareButton">Сравнить</button>
+					 <div id="result"></div>
+				</div>
+		  </div>
+
+    <script src="api.js" type="text/javascript"></script>
+    <script> 
+        let button = document.getElementById("compareButton");
+
+        button.addEventListener('click', (event) => {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let c = document.getElementById("c").value;
+
+            api.largerOfThree(a, b, c)
+                .then(data => displayResult(data.result));
+        });
+
+        function displayResult(result) {
+            let resultBlock = document.getElementById("result");
+            resultBlock.innerText = `result is ${result}`;
+        }
+    </script>
+
+</body>
+</html>

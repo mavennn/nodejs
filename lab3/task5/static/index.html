@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="./index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@900&display=swap" rel="stylesheet">
+        <title>Index</title>
+</head>
+<body>
+
+          <div class="logo">
+            <h1>TASK 5</h1>
+          </div>
+          <div class="result-wrapper">
+             <p id="result"></p>
+          </div>
+          <div class="form-wrapper">
+                  <div class="form">
+                          <div class="input-wrapper">
+                                  <input id="email-input" type="text" placeholder="Введите свою почту" />
+                                  <label for="email-input"></label>
+                          </div>
+
+                          <div class="input-wrapper">
+                                  <input id="surname-input" type="text" placeholder="Введите свою фамилию " />
+                                  <label for="surname-input"></label>
+                          </div>
+
+                          <div class="input-wrapper">
+                                  <input id="phone-input" type="text" placeholder="Введите номер телефона" />
+                                  <label for="phone-input"></label>
+                          </div>
+            
+                          <div class="btn-wrapper">
+                                 <button id="send-btn" class="btn">Отправить</button>
+                          </div>
+
+                  </div>
+          </div>
+
+		  <script type="text/javascript">
+              var sendButton = document.getElementById("send-btn");
+
+              sendButton.addEventListener("click", (event) => {
+
+                  var email = document.getElementById("email-input").value;
+                  var surname = document.getElementById("surname-input").value;
+                  var phone = document.getElementById("phone-input").value;
+
+                  fetch("http://localhost:3000/api/users/add", {
+                      method: "POST",
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ email, surname, phone  })
+                  })
+                  .then(res => res.json())
+                  .then(res => responseHandler(res));
+
+              });
+
+              function responseHandler (res) {
+                  let result = document.getElementById("result");
+                  result.innerText = res.message;
+                  setInterval(() => {
+                    result.innerText = "";
+                  }, 2000);
+              }
+
+		  </script>
+</body>
+</html>

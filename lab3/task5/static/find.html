@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <title>Find user!</title>
+        <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="input-wrapper">
+      <input id="email" type="text" placeholder="Введите email"/>
+      <button id="send-btn" class="btn" >Найти</button>
+    </div>
+
+    <div id="result">
+        <p id="email-result"></p>
+        <p id="surname-result"></p>
+        <p id="phone-result"></p>
+    </div>
+  </div>
+  
+
+
+  <script type="text/javascript">
+            const button = document.getElementById("send-btn");
+
+            function responseHandler (res) {
+                res.json()
+                .then(res => {
+                    console.log(res);
+                    document.getElementById("email-result").innerText = `Email: ${res.email}`;
+                    document.getElementById("surname-result").innerText = `Surname: ${res.surname}`;
+                    document.getElementById("phone-result").innerText = `Phone: ${res.phone}`;
+                });
+            }
+
+            button.addEventListener("click", () => {
+                const email = document.getElementById("email").value;
+
+                fetch(`http://localhost:3000/api/users/${email}`, { method: "GET" })
+                    .then(res => responseHandler(res))
+            });
+
+        </script></body>
+</html>
