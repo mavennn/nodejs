@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto.ru</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+
+    <!-- Создание нового типа машины -->
+    <div>
+        <h3>Создание нового типа машины</h3>
+        <input id="new-car-title-input" type="text" placeholder="Введите название" />
+        <label for="new-car-title-input"></label>
+        <input id="new-car-price-input" type="number" placeholder="Введите цену" />
+
+        <p id="creation-result"></p>
+
+        <button id="create-new-car">Создать</button>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <!-- Получение стоимости машины по ее типу -->
+    <div>
+        <h3>Получение стоимости машины по ее типу</h3>
+        <select name="" id="all-cars"></select>
+
+        <p id="price-result"></p>
+
+        <button>Узнать цену</button>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <!-- Создание нового склада с находящимися в нём машинами -->
+    <div>
+        <h3>Создание нового склада с находящимися в нём машинами</h3>
+        <input id="new-stock-title-input" type="text" placeholder="Введите название склада">
+        <select style="display: block" name="" id="all-cars-multiple" multiple></select>
+
+        <p id="stock-creation-result"></p>
+
+        <button id="create-stock-btn">Создать</button>
+    </div>
+
+    <!-- Получение информации о машинах на складе по названию склада -->
+    <div>
+        <h3>Получение информации о машинах на складе по названию склада</h3>
+        <input id="stock-title-input" type="text">
+        <ul id="stock-cars-list"></ul>
+
+        <button id="get-cars-btn">Узнать машины</button>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="firstTask.js"></script>
+    <script src="secondTask.js"></script>
+    <script src="thirdTask.js"></script>
+    <script type="text/javascript">
+        "use strict";
+
+        const getCarsButton = document.getElementById("get-cars-btn");
+
+        function fillCarsList(cars) {
+            const carsUl = document.getElementById("stock-cars-list");
+            carsUl.innerHTML = "";
+
+            for(var car of cars) {
+                var li = document.createElement("li");
+                li.innerText = car;
+
+                carsUl.appendChild(li);
+            }
+        }
+
+        getCarsButton.addEventListener("click", () => {
+            const title = document.getElementById("stock-title-input").value;
+
+            api.getStockByTitle(title)
+                .then(res => {
+                    if (res.ok)
+                        return res.json();
+                })
+                .then(stock => {
+                    if (Array.isArray(stock.cars)) {
+                        fillCarsList(stock.cars);
+                    }
+                })
+        });
+
+        refreshPage();
+
+        // обновляет страницу
+        function refreshPage() {
+            api.getAllCars()
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(res => {
+                    fillCarsSelect(res, "all-cars");
+                    fillCarsSelect(res, "all-cars-multiple")
+                });
+        }
+
+    </script>
+</body>
+</html>

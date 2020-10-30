@@ -1,2 +1,0 @@
-{}
-{"email":"sdfsdf","surname":"sfdfs","phone":"fsdfsdf"}

@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Склад №1",
+    "cars": [
+      "Toyota RAV4",
+      "Kia Rio",
+      "Lada Granta"
+    ]
+  },
+  {
+    "title": "Склад №2",
+    "cars": [
+      "VW Polo",
+      "Lada Largus VP"
+    ]
+  },
+  {
+    "title": "alex",
+    "cars": [
+      "Lada Granta",
+      "Lada Vesta",
+      "Kia Rio"
+    ]
+  },
+  {
+    "title": "iii",
+    "cars": [
+      "Lada Granta",
+      "Lada Vesta",
+      "Kia Rio",
+      "Hyundai Creta",
+      "VW Polo",
+      "Hyundai Solaris",
+      "Toyota RAV4",
+      "Lada Largus VP",
+      "VW Tiguan"
+    ]
+  }
+]
